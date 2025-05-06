@@ -1,14 +1,3 @@
-function Test-Admin {
-    $currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-    $principal = New-Object System.Security.Principal.WindowsPrincipal($currentUser)
-    return $principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)
-}
-
-if (-not (Test-Admin)) {
-    Write-Host "This script must be run as Administrator. Relaunching with elevated privileges..." -ForegroundColor Yellow
-    Start-Process PowerShell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$MyInvocation.MyCommand.Path`"" -Verb RunAs
-    exit
-}
 # Thay đổi múi giờ, định dạng ngày tháng
 function Log {
     param (
