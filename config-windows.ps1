@@ -16,7 +16,7 @@ function Log {
     )
     Write-Host $Message
 }
-
+Set-ItemProperty -Path REGISTRY::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System -Name ConsentPromptBehaviorAdmin -Value 0
 # Set the time zone, date format, and refresh Taskbar
 try {
     # Đặt múi giờ
