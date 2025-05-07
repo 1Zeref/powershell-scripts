@@ -121,6 +121,31 @@ Log ""
 
 # Remove Task View
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Value 0
+# Kiểm tra xem script có đang chạy với quyền quản trị hay không
+$isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
+if (-not $isAdmin) {
+    Write-Host "Vui lòng chạy script này với quyền quản trị."
+    exit
+}
+
+# Vô hiệu hóa User Choice Protection Driver (UCPD)
+Write-Host "Vô hiệu hóa UCPD..."
+schtasks.exe /change /Disable /TN "\Microsoft\Windows\AppxDeploymentClient\UCPD velocity"
+
+# Đặt giá trị registry để tắt nút Widgets
+Write-Host "Đặt giá trị registry để tắt nút Widgets..."
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarDa" -Value 0 -Type DWord
+
+# Khôi phục User Choice Protection Driver (UCPD)
+Write-Host "Khôi phục UCPD..."
+schtasks.exe /change /Enable /TN "\Microsoft\Windows\AppxDeploymentClient\UCPD velocity"
+
+# Khởi động lại Explorer để áp dụng thay đổi
+Write-Host "Khởi động lại Explorer để áp dụng thay đổi..."
+Stop-Process -Name explorer -Force
+Start-Process explorer.exe
+
+Write-Host "Nút Widgets đã được tắt. Nếu không thấy hiệu lực, vui lòng khởi động lại máy tính."
 
 # Path to the key containing notification settings
 $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications"
