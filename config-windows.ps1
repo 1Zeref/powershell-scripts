@@ -121,16 +121,6 @@ Log ""
 
 # Remove Task View
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Value 0
-# Remove Widgets button
-$regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-
-# If the key does not exist, create a new key
-if (!(Test-Path $regPath)) {
-    New-Item -Path $regPath -Force | Out-Null
-}
-
-# Set the "ToastEnabled" value to 0 (0: disable, 1: enable)
-Set-ItemProperty -Path $regPath -Name "TaskbarDa" -Value 0 -Type DWord
 
 # Path to the key containing notification settings
 $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications"
