@@ -121,6 +121,9 @@ Log ""
 
 # Remove Task View
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Value 0
+Get-AppxPackage *WebExperience* | Remove-AppxPackage
+
+winget uninstall –id 9MSSGKG348SPCompletely U
 # Path to the key containing notification settings
 $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications"
 
