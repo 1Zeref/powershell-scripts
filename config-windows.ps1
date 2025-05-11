@@ -56,10 +56,7 @@ w32tm /resync /force
 # (Optional) Check the configuration and synchronization status
 w32tm /query /status
 w32tm /query /configuration
-    # Reset hiển thị ngày giờ trên Taskbar bằng cách khởi động lại Windows Explorer
-    Log "Restarting Windows Explorer to refresh Taskbar date/time display..."
-    Stop-Process -Name explorer -Force
-    Start-Sleep -Milliseconds 500  # Đợi một chút để Explorer khởi động lại
+
     
     # Ghi ra thông tin chi tiết
     Log "Time zone successfully set:"
@@ -145,7 +142,8 @@ if (!(Test-Path $regPath)) {
 Set-ItemProperty -Path $regPath -Name "ToastEnabled" -Value 0 -Type DWord
 
 Write-Output "Toast notifications have been disabled. Please log out and log back in or restart your computer for the changes to take effect."
-
+Stop-Process -Name explorer -Force
+Start-Sleep -Milliseconds 500  # Đợi một chút để Explorer khởi động lại
 # Pause before exiting
 Write-Host "Press any key to exit..."
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
