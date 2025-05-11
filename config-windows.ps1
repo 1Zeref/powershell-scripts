@@ -122,8 +122,16 @@ Log ""
 # Remove Task View
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "ShowTaskViewButton" -Value 0
 Get-AppxPackage *WebExperience* | Remove-AppxPackage
+$computerInfo = Get-ComputerInfo
 
-winget uninstall –id 9MSSGKG348SPCompletely U
+# Kiểm tra xem tên hệ điều hành có bắt đầu bằng "Microsoft Windows 11" không
+if ($computerInfo.OsName.StartsWith("Microsoft Windows 11")) {
+    # Nếu là Windows 11, thực thi đoạn mã của bạn ở đây
+    Write-Host "Đây là Windows 11."
+    Write-Host "Thực thi mã dành riêng cho Windows 11..."
+    winget uninstall –id 9MSSGKG348SPCompletely U
+}
+
 # Path to the key containing notification settings
 $regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications"
 
