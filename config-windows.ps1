@@ -129,7 +129,8 @@ if ($computerInfo.OsName.StartsWith("Microsoft Windows 11")) {
     # Nếu là Windows 11, thực thi đoạn mã của bạn ở đây
     Write-Host "Đây là Windows 11."
     Write-Host "Thực thi mã dành riêng cho Windows 11..."
-    winget uninstall –id 9MSSGKG348SPCompletely U
+    Get-AppxPackage *WebExperience* | Remove-AppxPackage
+    winget uninstall --id 9MSSGKG348SP
 }
 
 # Path to the key containing notification settings
